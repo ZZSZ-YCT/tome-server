@@ -20,9 +20,9 @@ pub struct Model {
     #[sea_orm(column_name = "LINE", column_type = "Text")]
     pub line: String,
     #[sea_orm(column_name = "UNSURE")]
-    pub unsure: i32,
+    pub unsure: bool,
     #[sea_orm(column_name = "SENSITIVE")]
-    pub sensitive: i32,
+    pub sensitive: bool,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
