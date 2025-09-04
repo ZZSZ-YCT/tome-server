@@ -9,8 +9,8 @@ pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 pub struct Settings {
     pub database_url: String,
     pub server_port: u16,
-    pub log_level: String,
     pub api_key: String,
+    pub log_level: String,
 }
 
 impl Default for Settings {
@@ -18,8 +18,8 @@ impl Default for Settings {
         Settings {
             database_url: "sqlite:database.db?mode=rwc".to_string(),
             server_port: 8080,
-            log_level: "info".to_string(),
             api_key: "very-secret-key!!!".to_string(),
+            log_level: "info".to_string(),
         }
     }
 }

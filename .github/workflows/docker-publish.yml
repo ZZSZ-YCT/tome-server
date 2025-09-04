@@ -13,6 +13,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Read version from Cargo.toml
+      id: cargo
+      run: |
+        version=$(grep '^version =' Cargo.toml | head -1 | sed 's/version = "\(.*\)"/\1/')
+        echo "VERSION=$version" >> $GITHUB_ENV
+
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
@@ -26,4 +33,6 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: blackhig/tome-server:latest
+        tags: |
+          blackhig/tome-server:${{ env.VERSION }}
+          blackhig/tome-server:latest
