@@ -1,4 +1,5 @@
 pub mod root;
+pub mod article;
 
 use actix_web::web;
 
