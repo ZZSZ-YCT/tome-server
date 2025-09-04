@@ -7,6 +7,7 @@ use serde_json::Value;
 use crate::entities::article::{ActiveModel, Model};
 use crate::entities::prelude::Articles;
 use crate::models::article::ArticleNoId;
+use crate::security::api_key::AuthenticatedUser;
 
 #[get("/article")]
 pub async fn list_articles(db: web::Data<DatabaseConnection>) -> impl Responder {
@@ -20,6 +21,7 @@ pub async fn list_articles(db: web::Data<DatabaseConnection>) -> impl Responder 
 pub async fn create_article(
     db: web::Data<DatabaseConnection>,
     article: web::Json<ArticleNoId>,
+    _user: AuthenticatedUser,
 ) -> impl Responder {
     let model = ActiveModel {
         id: Set(Uuid::new_v4().to_string()),
@@ -55,6 +57,7 @@ pub async fn put_article(
     db: web::Data<DatabaseConnection>,
     path: web::Path<Uuid>,
     article: web::Json<ArticleNoId>,
+    _user: AuthenticatedUser,
 ) -> impl Responder {
     let id = path.into_inner();
 
@@ -107,6 +110,7 @@ pub async fn patch_article(
     db: web::Data<DatabaseConnection>,
     path: web::Path<Uuid>,
     patch_json: web::Json<Value>,
+    _user: AuthenticatedUser,
 ) -> impl Responder {
     let id = path.into_inner();
 
@@ -153,6 +157,7 @@ pub async fn patch_article(
 pub async fn delete_article(
     db: web::Data<DatabaseConnection>,
     path: web::Path<Uuid>,
+    _user: AuthenticatedUser,
 ) -> impl Responder {
     let id = path.into_inner();
     match Articles::delete_by_id(id).exec(db.get_ref()).await {

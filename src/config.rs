@@ -1,23 +1,25 @@
-use config::{Config, File};
+use config::{Config, Environment, File};
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::Path;
 
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Settings {
     pub database_url: String,
     pub server_port: u16,
     pub log_level: String,
+    pub api_key: String,
 }
 
 impl Default for Settings {
     fn default() -> Self {
         Settings {
-            database_url: "sqlite::memory:".to_string(),
+            database_url: "sqlite:data/database.db?mode=rwc".to_string(),
             server_port: 8080,
             log_level: "info".to_string(),
+            api_key: "very-secret-key!!!".to_string(),
         }
     }
 }
@@ -50,6 +52,10 @@ pub fn load_settings() -> Settings {
 
     let cfg = Config::builder()
         .add_source(File::with_name(path))
+        .add_source(
+            Environment::with_prefix("TOME")
+                .keep_prefix(false)
+        )
         .build()
         .expect("Failed to build configuration");
 
