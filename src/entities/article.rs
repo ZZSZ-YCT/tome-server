@@ -10,9 +10,9 @@ pub struct Model {
         column_name = "ID",
         primary_key,
         auto_increment = false,
-        column_type = "Text"
+        column_type = "Uuid"
     )]
-    pub id: String,
+    pub id: Uuid,
     #[sea_orm(column_name = "TIME", column_type = "Text")]
     pub time: String,
     #[sea_orm(column_name = "CONTRIBUTOR", column_type = "Text")]
@@ -20,9 +20,9 @@ pub struct Model {
     #[sea_orm(column_name = "LINE", column_type = "Text")]
     pub line: String,
     #[sea_orm(column_name = "UNSURE")]
-    pub unsure: i32,
+    pub unsure: bool,
     #[sea_orm(column_name = "SENSITIVE")]
-    pub sensitive: i32,
+    pub sensitive: bool,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
