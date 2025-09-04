@@ -16,7 +16,7 @@ pub struct Settings {
 impl Default for Settings {
     fn default() -> Self {
         Settings {
-            database_url: "sqlite:data/database.db?mode=rwc".to_string(),
+            database_url: "sqlite:database.db?mode=rwc".to_string(),
             server_port: 8080,
             log_level: "info".to_string(),
             api_key: "very-secret-key!!!".to_string(),
